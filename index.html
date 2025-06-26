@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Máquina de Pelúcia</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    #container {
+      text-align: center;
+      position: relative;
+    }
+
+    #machine {
+      max-width: 100%;
+      height: auto;
+    }
+
+    #claw {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      transition: all 1s ease;
+    }
+
+    #prize-area {
+      margin-top: 20px;
+    }
+
+    #prize {
+      width: 150px;
+      height: auto;
+      transition: opacity 1s ease;
+    }
+
+    #controls {
+      margin-top: 30px;
+    }
+
+    .btn {
+      background: transparent;
+      border: 2px solid #00f0ff;
+      color: #00f0ff;
+      font-size: 1.5rem;
+      padding: 10px 20px;
+      margin: 0 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: box-shadow 0.3s;
+    }
+
+    .btn:hover {
+      box-shadow: 0 0 15px #00f0ff;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <img id="machine" src="maquina.png" alt="Máquina de Pelúcia">
+    <img id="claw" src="gancho.png" alt="Garra">
+
+    <div id="prize-area">
+      <img id="prize" src="Hotwheels" alt="Prêmio" style="display: none;">
+    </div>
+
+    <div id="controls">
+      <button class="btn" id="left">←</button>
+      <button class="btn" id="right">→</button>
+      <button class="btn" id="drop">JÁ!</button>
+    </div>
+  </div>
+
+  <script>
+    const claw = document.getElementById('claw');
+    const prize = document.getElementById('prize');
+
+    const prizes = [
+      'url_do_premio1.png',
+      'url_do_premio2.png',
+      'url_do_premio3.png',
+      'url_do_premio4.png'
+    ];
+
+    document.getElementById('left').onclick = () => {
+      claw.style.left = '40%';
+    };
+
+    document.getElementById('right').onclick = () => {
+      claw.style.left = '60%';
+    };
+
+    document.getElementById('drop').onclick = () => {
+      claw.style.opacity = 0;
+      claw.style.transform = 'translate(-50%, 100%)';
+
+      setTimeout(() => {
+        const randomPrize = prizes[Math.floor(Math.random() * prizes.length)];
+        prize.src = randomPrize;
+        prize.style.display = 'block';
+        prize.style.opacity = 1;
+
+        setTimeout(() => {
+          claw.style.opacity = 1;
+          claw.style.transform = 'translateX(-50%)';
+        }, 2000);
+      }, 1000);
+    };
+  </script>
+</body>
+</html>
